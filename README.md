@@ -38,7 +38,6 @@ This project implements a sentiment analysis dashboard that pulls textual data f
      SNOWFLAKE_USER=your_username
      SNOWFLAKE_PASSWORD=your_password
      SNOWFLAKE_ACCOUNT=your_account_id
-     SNOWFLAKE_WAREHOUSE=your_warehouse
      SNOWFLAKE_DATABASE=your_database
      SNOWFLAKE_SCHEMA=your_schema
      ```
