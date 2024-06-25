@@ -33,9 +33,10 @@ def fetch_data(query):
 
 
 def generate_response(user_question, data_context):
-    # Convert data to a readable context for the AI model
+    # Assuming the data_context contains dictionaries with actual column names and values,
+    # and that your REAL_ESTATE_DATA table has columns like 'YEAR' and 'AVERAGE_PRICE'
     context = " ".join(
-        [f"{row['column_name']}: {row['value']}" for row in data_context])
+        [f"{key}: {row[key]}" for row in data_context for key in row])
     prompt = f"{context}\nQuestion: {user_question}\nAnswer:"
 
     try:
@@ -57,7 +58,7 @@ user_question = st.text_input("Ask a question about real estate:")
 if user_question:
     # Fetch relevant data from Snowflake
     # Adjust query as needed
-    data_context = fetch_data("SELECT * FROM ACTIVITY_DATA LIMIT 100")
+    data_context = fetch_data("SELECT * FROM REAL_ESTATE_DATA LIMIT 100")
 
     # Generate and display response based on the data context
     response = generate_response(user_question, data_context)
