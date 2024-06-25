@@ -1,14 +1,14 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import snowflake.connector
 from dotenv import load_dotenv
 import os
-import snowflake.connector
 
 # Load environment variables from .env
 load_dotenv()
 
-# Establish connection to Snowflake
+# Establish a connection to Snowflake
 
 
 def get_snowflake_connection():
@@ -20,41 +20,42 @@ def get_snowflake_connection():
         schema='ANALYSIS_SCHEMA'
     )
 
-# Fetch data from Snowflake
+# Fetch real estate data from Snowflake
 
 
 def fetch_data():
     conn = get_snowflake_connection()
-    query = "SELECT ACTIVITY_DATE, SUM(ACTIVITY_COUNT) AS TOTAL_ACTIVITY FROM ACTIVITY_DATA GROUP BY ACTIVITY_DATE ORDER BY ACTIVITY_DATE"
+    query = "SELECT YEAR, AVERAGE_PRICE FROM REAL_ESTATE_DATA ORDER BY YEAR"
     df = pd.read_sql(query, conn)
     conn.close()
     return df
 
 
 # Initialize Streamlit app
-st.title('Activity Trend Analysis Dashboard')
+st.title('Real Estate Price Trend Dashboard')
 
 # Load data
 df = fetch_data()
-df['ACTIVITY_DATE'] = pd.to_datetime(df['ACTIVITY_DATE'])
+
+# Convert YEAR to datetime for better plotting
+df['YEAR'] = pd.to_datetime(df['YEAR'], format='%Y')
 
 # Display data as a table
 st.write("### Data Overview", df)
 
-# Line chart for activity trends
-st.write("### Activity Trend Over Time")
-st.line_chart(df.set_index('ACTIVITY_DATE')['TOTAL_ACTIVITY'])
+# Line chart for average price trends
+st.write("### Average Price Trend Over Years")
+st.line_chart(df.set_index('YEAR')['AVERAGE_PRICE'])
 
-# Bar chart for activity comparison
-st.write("### Daily Activity Comparison")
+# Bar chart for average price comparison
+st.write("### Yearly Average Price Comparison")
 fig, ax = plt.subplots()
-ax.bar(df['ACTIVITY_DATE'].dt.strftime('%Y-%m-%d'),
-       df['TOTAL_ACTIVITY'], color='blue')
+ax.bar(df['YEAR'].dt.strftime('%Y'), df['AVERAGE_PRICE'], color='skyblue')
 plt.xticks(rotation=45, ha='right')
-plt.xlabel('Date')
-plt.ylabel('Total Activity')
+plt.xlabel('Year')
+plt.ylabel('Average Price ($)')
 st.pyplot(fig)
 
-# Optional: Refresh Data Button
+
 if st.button('Refresh Data'):
     st.experimental_rerun()
