@@ -14,7 +14,7 @@ This project implements a sentiment analysis dashboard that pulls textual data f
 
 ## Project Directory Structure
 ```
-/sentiment_dashboard
+/dashboard-llm-with-snwoflake
 │
 ├── .env # Environment variables file
 ├── sentiment_analysis.py # Script for performing sentiment analysis and updating Snowflake
