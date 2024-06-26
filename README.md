@@ -1,27 +1,16 @@
-# Sentiment Analysis Dashboard
+# Real Estate Price Prediction Dashboard
 
 ## Project Overview
 
-This project implements a sentiment analysis dashboard that pulls textual data from Snowflake, analyzes sentiment using the TextBlob library, and visualizes the results in a Streamlit web application. The system is designed to process unanalyzed text stored in Snowflake, update the database with sentiment scores, and provide an interactive interface for users to view and refresh sentiment analysis results.
+This project develops a dashboard that fetches historical real estate price data from Snowflake, predicts future property prices using a linear regression model, and visualizes these predictions in a Streamlit web application. The system is engineered to pull historical data from Snowflake, train a prediction model, and provide an interactive interface for users to query future real estate prices.
 
 ## Architecture
 
-- **Snowflake**: Used as the central data storage and management system. It stores all the text data and sentiment scores.
-- **Python**: Serves as the backend processing language, using Snowflake connectors to interact with the database and TextBlob for sentiment analysis.
-- **TextBlob**: A Python library used for processing textual data and providing sentiment analysis.
-- **Streamlit**: A Python framework for creating and sharing beautiful, custom web apps for machine learning and data science.
-- **.env File**: Contains sensitive information such as Snowflake credentials and is used to securely manage environment variables.
-
-## Project Directory Structure
-```
-/dashboard-llm-with-snwoflake
-│
-├── .env # Environment variables file
-├── sentiment_analysis.py # Script for performing sentiment analysis and updating Snowflake
-├── streamlit_app.py # Streamlit application for displaying the sentiment analysis results
-└── README.md # Documentation for the project
-```
-
+- **Snowflake**: Acts as the primary data warehouse, storing historical real estate data.
+- **Python**: Utilized as the main programming language, interfacing with Snowflake to retrieve data and using `scikit-learn` for building the predictive model.
+- **scikit-learn**: A Python library for machine learning, used here to train a linear regression model for price prediction.
+- **Streamlit**: Used to build and deploy the interactive web dashboard that visualizes data and predictions.
+- **.env File**: Manages sensitive credentials for Snowflake securely.
 
 ## Setup Instructions
 
@@ -29,7 +18,7 @@ This project implements a sentiment analysis dashboard that pulls textual data f
    - Ensure Python is installed on your system.
    - Install required Python packages:
      ```bash
-     pip install snowflake-connector-python streamlit textblob python-dotenv pandas
+     pip install snowflake-connector-python streamlit scikit-learn python-dotenv pandas
      ```
 
 2. **Configure Environment Variables**:
@@ -38,36 +27,51 @@ This project implements a sentiment analysis dashboard that pulls textual data f
      SNOWFLAKE_USER=your_username
      SNOWFLAKE_PASSWORD=your_password
      SNOWFLAKE_ACCOUNT=your_account_id
+     SNOWFLAKE_WAREHOUSE=your_warehouse
+     SNOWFLAKE_ROLE=your_role
      SNOWFLAKE_DATABASE=your_database
      SNOWFLAKE_SCHEMA=your_schema
      ```
 
-3. **Database Setup**:
-   - Log into your Snowflake account and ensure the `SENTIMENT_ANALYSIS_DATA` table is created as per the provided SQL schema.
+3. For the chat assistant, have a secrets.toml file with the following keys:
+   ```
+   openai_api_key = "your key"
+   [connections.snowflake]
+   user = "your username"
+   password = "your password"
+   warehouse = "your warehouse"
+   role = "your role"
+   account = "your account"
+   ```
 
-4. **Running the Sentiment Analysis Script**:
-   - Execute the sentiment analysis script to analyze and update sentiment scores:
+3. **Database Setup**:
+   - Log into your Snowflake account and ensure the `REAL_ESTATE_DATA` table is set up with the correct schema.
+
+4. **Running the dashboard file**:
+   - Launch the streamlit dashboard to see the price analysis
      ```bash
-     python sentiment_analysis.py
+     streamlit run stm.py
      ```
 
-5. **Running the Streamlit Application**:
-   - Launch the Streamlit dashboard to view the analysis results:
+5. **Running the chatbot**:
+   - Launch the Streamlit dashboard to interact with the assistant:
      ```bash
-     streamlit run streamlit_app.py
+     streamlit run chat.py
      ```
 
 ## Resources
 
 - [Snowflake Documentation](https://docs.snowflake.com)
 - [Streamlit Documentation](https://docs.streamlit.io)
-- [TextBlob Documentation](https://textblob.readthedocs.io/en/dev/)
+- [scikit-learn Documentation](https://scikit-learn.org/stable/)
 - [Python `.env` Usage](https://pypi.org/project/python-dotenv/)
 
 ## Troubleshooting
 
 - Ensure all environment variables are correctly set in the `.env` file.
 - Check network settings if there is difficulty connecting to Snowflake.
-- Verify that the Python packages are installed and up to date.
+- Verify that all Python packages are installed and up to date.
+
+
 
 
