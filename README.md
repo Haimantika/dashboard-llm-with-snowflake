@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This project develops a dashboard that fetches historical real estate price data from Snowflake, predicts future property prices using a linear regression model, and visualizes these predictions in a Streamlit web application. The system is engineered to pull historical data from Snowflake, train a prediction model, and provide an interactive interface for users to query future real estate prices.
+This project develops a dashboard that fetches historical real estate price data from Snowflake, and visualizes these predictions in a Streamlit web application. The system is engineered to pull historical data from Snowflake, and provide an chat assistant for users to query future real estate prices using NLP.
 
 ## Architecture
 
