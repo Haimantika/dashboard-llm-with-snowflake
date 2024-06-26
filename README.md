@@ -8,9 +8,8 @@ This project develops a dashboard that fetches historical real estate price data
 
 - **Snowflake**: Acts as the primary data warehouse, storing historical real estate data.
 - **Python**: Utilized as the main programming language, interfacing with Snowflake to retrieve data and using `scikit-learn` for building the predictive model.
-- **scikit-learn**: A Python library for machine learning, used here to train a linear regression model for price prediction.
 - **Streamlit**: Used to build and deploy the interactive web dashboard that visualizes data and predictions.
-- **.env File**: Manages sensitive credentials for Snowflake securely.
+- **OpenAI**: To build the chat assistant.
 
 ## Setup Instructions
 
